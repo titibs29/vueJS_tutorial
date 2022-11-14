@@ -3,19 +3,110 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <title>Mon Application Vue.js</title>
 </head>
 <body>
-    <div id="app">
+    <div class="app">
         <h1>Ma première application Vue.js !</h1>
         <p>J'ai hâte de créer des applications incroyables !</p>
+        <p>{{ message }}</p>
+
+
+
+
+
+        <h2>exemple v-on</h2>
+        <button @click="show = !show">Afficher / Masquer</button>
+        <div v-show="show">
+            <!--make the background red-->
+            <p class="hidden">Je suis un paragraphe caché !</p>
+        </div>
+
+        <h2>exemple v-if</h2>
+        <button @click="strong = !strong">Afficher / Masquer</button>
+        <div v-if="strong == true">
+            <!--make the background red-->
+            <p class="hidden">je suis absent si off</p>
+        </div>
+
+        <h2>exemple v-for</h2>
+        <ul>
+            <li v-for="item in shoppingCart">
+                {{ item.name }} - {{ item.price }}€
+            </li>
+        </ul>
+
+        <h2>exemple computed</h2>
+        <p>Le total de votre panier est de {{ total }}€</p>
+
+
+        <h2>exemple v-bind</h2>
+        <ul>
+            <li v-for="item in apiResponse">
+                <a v-bind:href="item.url">{{ item.name }}</a>
+            </li>
+        </ul>
+
+        <h2>exemple v-model</h2>
+        <label for="username">Nom d'utilisateur</label>
+        <input type="text" id="username" v-model="username"/>
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" v-model="password"/>
+        <p>bonjour {{ username }}</p>
+        <p>votre mot de passe est <strike>{{ password }}</strike></p>
+
+        
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+
+
+
     <script>
         const app = new Vue({
-            el: '#app',
+            el: '.app',
             data: {
-                message: 'Hello Vue!'
+                message: 'Hello Vue!',
+                show: false,
+                strong: false,
+                shoppingCart: [
+                    { name: 'Banane', price: 1.50 },
+                    { name: 'Pomme', price: 1.00 },
+                    { name: 'Orange', price: 1.25 },
+                    { name: 'Poire', price: 1.75 },
+                    { name: 'noix de coco', price: 2.00 },
+                    { name: 'cerise', price: 1.30 },
+                    
+                ],
+                apiResponse: [
+                    { name: 'github', url: 'https://www.github.com' },
+                    { name: 'google', url: 'https://www.google.com' },
+                    { name: 'facebook', url: 'https://www.facebook.com' },
+                ],
+                color: 'bleu',
+                username: '',
+                password: '',
+
+            },
+            computed: {
+                total() {
+                    return this.shoppingCart.reduce((total, item) => {
+                        return total + item.price
+                    }, 0)
+                },
+                label() {
+                    return ': ' + this.color
+                }
+            },
+            methods:{
+                alertColor(color){
+                    alert("ma couleur est " + color)
+                },
+                changeColor(){
+                    this.color = 'rouge'
+                    this.alertColor(this.label)
+                }
             }
         })
     </script>

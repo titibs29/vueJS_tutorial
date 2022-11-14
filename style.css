@@ -1,0 +1,14 @@
+
+/*make sure to use the correct path to the style.css file */
+
+
+/* make the background of the page  dark gray */
+body {
+    background-color: #333;
+}
+
+/* make the background of the hidden class red */
+.hidden {
+    background-color: red;
+}
+
